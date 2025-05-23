@@ -8,9 +8,9 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps {
-                git 'https://github.com/KarimLabidProf/sonarqube-test.git'
-            }
+           steps {
+                checkout scm
+                }
         }
 
         stage('Compile Java') {
