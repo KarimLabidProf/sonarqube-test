@@ -2,26 +2,28 @@ pipeline {
     agent any
 
     environment {
+        // Le nom EXACT que tu as défini dans Jenkins > Configure System > SonarQube servers
         SONARQUBE_ENV = 'SQ1'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // clone depuis ton dépôt ou utiliser un workspace local
-                git 'https://ton-repo.git' // à adapter si besoin
+                git 'https://github.com/KarimLabidProf/sonarqube-test.git'
             }
         }
 
         stage('Compile Java') {
             steps {
-                bat 'javac HelloWorld.java'
+                // Compiler le fichier Calculator.java
+                bat 'javac Calculator.java'
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv("${SONARQUBE_ENV}") {
+                    // Lance l’analyse avec le fichier sonar-project.properties du repo
                     bat 'sonar-scanner.bat'
                 }
             }
