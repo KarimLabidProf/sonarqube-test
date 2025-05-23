@@ -13,18 +13,16 @@ pipeline {
                 }
         }
 
-        stage('Compile Java') {
+       stage('Compile Java') {
             steps {
-                // Compiler le fichier Calculator.java
-                bat 'javac Calculator.java'
+                sh 'javac Calculator.java'
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv("${SONARQUBE_ENV}") {
-                    // Lance l’analyse avec le fichier sonar-project.properties du repo
-                    bat 'sonar-scanner.bat'
+                    sh 'sonar-scanner'
                 }
             }
         }
