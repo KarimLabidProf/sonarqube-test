@@ -15,14 +15,14 @@ pipeline {
 
        stage('Compile Java') {
             steps {
-                sh 'javac Calculator.java'
+                bat 'javac Calculator.java'
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv("${SONARQUBE_ENV}") {
-                    sh 'sonar-scanner'
+                    bat 'sonar-scanner'
                 }
             }
         }
