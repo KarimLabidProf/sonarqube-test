@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        // Le nom EXACT que tu as défini dans Jenkins > Configure System > SonarQube servers
+         
         SONARQUBE_ENV = 'SQ1'
     }
 
@@ -19,13 +19,11 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv("${SONARQUBE_ENV}") {
-                    bat 'sonar-scanner'
-                }
-            }
-        }
+       withSonarQubeEnv('MySonarQube') {
+        withCredentials([string(credentialsId: 'Sonar-token2', variable: 'SONAR_TOKEN')]) {
+        bat "sonar-scanner -Dsonar.login=%SONAR_TOKEN%"
+    }
+}
 
         stage('Quality Gate') {
             steps {
